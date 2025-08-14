@@ -317,10 +317,10 @@ const Mobil = ({ data }) => {
 
   return(
     <div className="w-[95%] flex flex-col mt-10 justify-between">
-      <div className="w-full justify-items-center grid grid-cols-3 gap gap-x-3">
-        <div className="w-full flex flex-col">
-          <button onClick={() => setPrecio(p => !p)} className="w-full flex justify-between mt-3">
-            <span className="text-lg font-semibold">Precio</span>
+      <div className="w-full justify-items-center grid grid-cols-3 gap gap-x-1">
+        <div className="w-full flex flex-col relative">
+          <button onClick={() => setPrecio(p => !p)} className="w-full flex justify-between mt-3 bg-white p-2">
+            <span className="text-[15px] font-semibold">Precio</span>
             <div className={`text-black ${precio ? "" : "rotate-180"}`}>
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-chevron-up" viewBox="0 0 16 16">
                 <path fillRule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708z" />
@@ -328,9 +328,9 @@ const Mobil = ({ data }) => {
             </div>
           </button>
           {precio && (
-            <div className="w-full flex flex-col mt-1.5">
-              <div className="w-full grid grid-cols-2">
-                <div className="w-[80%] flex bg-white border rounded-sm border-slate-300 items-center py-1 px-2">
+            <div className="w-full bg-white p-2 flex flex-col mt-1.5 absolute -bottom-20">
+              <div className="w-full grid grid-cols-1 gap gap-y-1">
+                <div className="w-full flex bg-white border rounded-sm border-slate-300 items-center py-1 px-2">
                   <span className="text-sm font-semibold">$</span>
                   <input 
                     type="number" 
@@ -341,7 +341,7 @@ const Mobil = ({ data }) => {
                     className="w-full focus:outline-none"
                   />
                 </div>
-                <div className="w-[80%] flex bg-white border rounded-sm border-slate-300 items-center py-1 px-2">
+                <div className="w-full flex bg-white border rounded-sm border-slate-300 items-center py-1 px-2">
                   <span className="text-sm font-semibold">$</span>
                   <input 
                     type="number" 
@@ -356,9 +356,9 @@ const Mobil = ({ data }) => {
             </div>
           )}
         </div>
-        <div className="w-full flex flex-col">
-          <button onClick={() => setCategoria(p => !p)} className="w-full mt-3 flex justify-between">
-            <span className="text-lg font-semibold">Categorías</span>
+        <div className="w-full flex flex-col relative">
+          <button onClick={() => setCategoria(p => !p)} className="w-full mt-3 flex justify-between bg-white p-2">
+            <span className="text-[15px] font-semibold">Categorías</span>
             <div className={`text-black ${categoria ? "" : "rotate-180"}`}>
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-chevron-up" viewBox="0 0 16 16">
                 <path fillRule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708z" />
@@ -366,9 +366,9 @@ const Mobil = ({ data }) => {
             </div>
           </button>
           {categoria && (
-            <div className="w-full mt-1.5 flex flex-col gap gap-y-1.5">
+            <div className="w-full mt-1.5 flex flex-col gap gap-y-1.5 absolute -bottom-52 bg-white p-2">
               {['Blusas y Tops', 'Carrusel', 'Faldas y Shores', 'Más Vendidos', 'Nueva Colección', 'Sets', 'Vestidos'].map((cat, index) => (
-                <label key={index} className="w-full flex">
+                <label key={index} className="w-full flex text-[12px]">
                   <input 
                     type="checkbox"
                     className="mr-3"
@@ -382,9 +382,9 @@ const Mobil = ({ data }) => {
           )}
         </div>
 
-        <div className="w-full flex flex-col">
-          <button onClick={() => setCalificacion(p => !p)} className="w-full mt-3 flex justify-between">
-            <span className="text-lg font-semibold">Calificación</span>
+        <div className="w-full flex flex-col relative">
+          <button onClick={() => setCalificacion(p => !p)} className="w-full mt-3 flex justify-between bg-white p-2">
+            <span className="text-[15px] font-semibold">Calificación</span>
             <div className={`text-black ${calificacion ? "" : "rotate-180"}`}>
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-chevron-up" viewBox="0 0 16 16">
                 <path fillRule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708z" />
@@ -392,15 +392,15 @@ const Mobil = ({ data }) => {
             </div>
           </button>
           {calificacion && (
-            <div className="w-full mt-1.5 flex flex-col gap-y-1.5">
+            <div className="w-full mt-1.5 flex flex-col gap-y-1 absolute -bottom-39 bg-white">
               {[5, 4, 3, 2, 1].map((stars, index) => (
-                <label key={index} className="w-full flex items-center cursor-pointer">
+                <label key={index} className="w-full flex items-center cursor-pointer p-1">
                   <input
                     type="checkbox"
                     name="calificacion"
                     checked={calificacionesSeleccionadas.includes(stars)}
                     onChange={() => handleCalificacionChange(stars)}
-                    className="mr-3"
+                    className="mr-2"
                   />
                   <div className="flex">
                     {[...Array(5)].map((_, i) => (
