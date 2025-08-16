@@ -88,7 +88,7 @@ const Desktop = ({ data }) => {
       });
     }
     
-    const nuevosGrupos = cortarArray(productosFiltrados, 8);
+    const nuevosGrupos = cortarArray(productosFiltrados, 12);
     setGrupos(nuevosGrupos);
     setPagina(0);
     setProductos(nuevosGrupos[0] || []);
@@ -223,7 +223,7 @@ const Desktop = ({ data }) => {
         )}
       </div>
 
-      <div className="w-[70%]">
+      <div className="w-[70%] overflow-x-hidden">
         <div className="grid grid-cols-4 gap-4">
           {productos.map((p, k) => (
             <div key={k}>
@@ -284,7 +284,7 @@ const Mobil = ({ data }) => {
       });
     }
     
-    const nuevosGrupos = cortarArray(productosFiltrados, 4);
+    const nuevosGrupos = cortarArray(productosFiltrados, 6);
     setGrupos(nuevosGrupos);
     setPagina(0);
     setProductos(nuevosGrupos[0] || []);
@@ -507,7 +507,7 @@ export default function Home() {
 
       <div className="w-full flex flex-col justify-center items-center mt-5 xl:mt-10">
         <h3 className="text-[15px] xl:text-[28px] font-semibold">FAVORITOS</h3>
-        <div className="w-full xl:w-[80%] grid grid-cols-3 justify-items-center gap gap-x-2 xl:gap-4">
+        <div className="w-full xl:w-[80%]">
           
           <div className="w-full">
             <Carrusel data={set} flechas={true} cardMitad={true} cantCardMobil={3} cantCardDesktop={4} Card={Cardtes} estiloCarrusel={"w-full h-[300px] xl:h-[450px]"}/>
