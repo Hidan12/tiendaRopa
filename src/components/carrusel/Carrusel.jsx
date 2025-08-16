@@ -8,7 +8,7 @@ import 'swiper/css/pagination';
 import { useEffect, useRef } from 'react';
 
 
-export default function Carrusel ({Card, cantCardMobil, cantCardDesktop, data, estiloNavigate, handler, estiloCarrusel, flechas = false, cardMitad = false}){
+export default function Carrusel ({Card, cantCardMobil, cantCardDesktop, data, estiloNavigate, handler, estiloCarrusel, flechas = false, cardMitad = false, alto=""}){
     const prevRef = useRef(null);
     const nextRef = useRef(null);
     const swiperRef = useRef(null);
@@ -31,7 +31,7 @@ export default function Carrusel ({Card, cantCardMobil, cantCardDesktop, data, e
                     <button ref={prevRef} className="custom-prev absolute top-0 z-2 py-2 ">
                         
                     </button>
-                    <button ref={nextRef} className="custom-next absolute top-60 z-2  right-0 text-black py-2">
+                    <button ref={nextRef} className={`custom-next absolute z-2  right-0 text-black py-4 ${alto}`}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-arrow-right" viewBox="0 0 16 16">
                             <path fillRule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
                         </svg>

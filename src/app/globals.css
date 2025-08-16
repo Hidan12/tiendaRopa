@@ -25,3 +25,12 @@ body{
 .animate-marquee {
   @apply animate-[marquee_10s_linear_infinite];
 }
+
+
+.scroll-hidden {
+  -ms-overflow-style: none;  
+  scrollbar-width: none;     
+}
+.scroll-hidden::-webkit-scrollbar {
+  display: none;             
+}

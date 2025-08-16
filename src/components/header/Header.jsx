@@ -40,7 +40,7 @@ const Mobil = ()=>{
     return(
       <div className='w-screen h-screen z-40 bg-black/80 absolute top-0'>
         <div className='w-[80%] h-full flex-col justify-between bg-white p-4'>
-          <div className='w-full flex justify-end'>
+          <div className='w-full flex justify-end mb-5'>
               <button onClick={()=> btn(b=>!b)} className='text-black'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-x-circle" viewBox="0 0 16 16">
                   <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
@@ -48,15 +48,18 @@ const Mobil = ()=>{
                 </svg>
               </button>
           </div>
-          <div className='px-5'>
-            <button onClick={()=>btn(b => !b)} className='text-black text-[4vw] font-semibold'>Categorias</button>
-          </div>
-          <div className='px-5'>
-            <button onClick={()=>btn(b => !b)} className='text-black text-[4vw] font-semibold'>Destacados</button>
-          </div>
-          <div onClick={()=>btn(b => !b)} className='px-5'>
-            <button className='text-black text-[4vw] font-semibold'>Favorito</button>
-          </div>
+          {
+            ["Lo Nuevo", "Vestidos", "Set", "Blusas y tops", "Pantalones/faldas/shorts", "Tarjeta de regalo", "Sale"].map((label, k)=>(
+              <button onClick={()=>btn(b => !b)}  key={k} className='w-[90%] border-b-1 border-b-gray-300 py-4 flex justify-between items-center'>
+                <span className='text-[#333] text-[16px] pl-8'>{label}</span>
+                <div className='text-[#d7192d]'>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" className="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                        <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                    </svg>
+                </div>
+            </button>
+            ))
+          }
         </div>
       </div>
     )

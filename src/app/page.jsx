@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import "./globals.css"
 import Carrusel from "@/components/carrusel/Carrusel";
 
@@ -66,7 +66,72 @@ const Desktop = ({ data }) => {
   const [pagina, setPagina] = useState(0);
   const [productos, setProductos] = useState([]);
   const [grupos, setGrupos] = useState([]);
-  
+  const derechaRef = useRef(null);
+
+   useEffect(() => {
+      const el = derechaRef.current;
+      if (!el) {
+        console.warn("derechaRef no montado");
+        return;
+      }
+
+      // LOG de estado inicial
+      console.log("DEBUG: attach listeners to right panel", {
+        overflowY: getComputedStyle(el).overflowY,
+        clientHeight: el.clientHeight,
+        scrollHeight: el.scrollHeight
+      });
+
+      const handleWheel = (e) => {
+        const deltaY = e.deltaY;
+        const { scrollTop, scrollHeight, clientHeight } = el;
+        const atTop = Math.ceil(scrollTop) <= 0;
+        const atBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
+
+        console.log("DEBUG wheel", { deltaY, scrollTop, clientHeight, scrollHeight, atTop, atBottom });
+
+        // Si el contenedor puede consumir el scroll -> prevenimos y consumimos
+        if ((deltaY > 0 && !atBottom) || (deltaY < 0 && !atTop)) {
+          e.preventDefault();             // evita que el body scrollee
+          // usa scrollBy en vez de manipular scrollTop directo
+          el.scrollBy({ top: deltaY, behavior: "auto" });
+        }
+        // si estamos en top o bottom dejamos que el evento burbujee
+      };
+
+      // touch para móviles
+      let startY = 0;
+      const onTouchStart = (ev) => {
+        startY = ev.touches[0]?.clientY ?? 0;
+      };
+      const onTouchMove = (ev) => {
+        const currentY = ev.touches[0]?.clientY ?? 0;
+        const delta = startY - currentY;
+        const { scrollTop, scrollHeight, clientHeight } = el;
+        const atTop = Math.ceil(scrollTop) <= 0;
+        const atBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
+
+        console.log("DEBUG touch", { delta, scrollTop, clientHeight, scrollHeight, atTop, atBottom });
+
+        if ((delta > 0 && !atBottom) || (delta < 0 && !atTop)) {
+          ev.preventDefault();
+          el.scrollBy({ top: delta, behavior: "auto" });
+          startY = currentY;
+        } else {
+          // dejamos que la página haga scroll
+        }
+      };
+
+      el.addEventListener("wheel", handleWheel, { passive: false });
+      el.addEventListener("touchstart", onTouchStart, { passive: true });
+      el.addEventListener("touchmove", onTouchMove, { passive: false });
+
+      return () => {
+        el.removeEventListener("wheel", handleWheel);
+        el.removeEventListener("touchstart", onTouchStart);
+        el.removeEventListener("touchmove", onTouchMove);
+      };
+  }, []);
 
   useEffect(() => {
     let productosFiltrados = [...data];
@@ -120,7 +185,7 @@ const Desktop = ({ data }) => {
   };
 
   return(
-    <div className="w-[95%] flex mt-10 justify-between">
+    <div className="w-[95%] flex mt-10 h-screen justify-between">
       <div className="w-[25%] flex flex-col items-center">
         
         <button onClick={() => setPrecio(p => !p)} className="w-full flex justify-between">
@@ -223,8 +288,8 @@ const Desktop = ({ data }) => {
         )}
       </div>
 
-      <div className="w-[70%] overflow-x-hidden">
-        <div className="grid grid-cols-4 gap-4">
+      <div className="w-[70%]  max-h-screen overflow-y-auto overflow-x-hidden overscroll-auto scroll-hidden"  ref={derechaRef}>
+        <div className="grid grid-cols-4 gap-4 ">
           {productos.map((p, k) => (
             <div key={k}>
               <img src={p.img} className="w-full h-60 object-cover" alt={p.titulo}/>
@@ -235,7 +300,7 @@ const Desktop = ({ data }) => {
         </div>
         
         {grupos.length > pagina + 1 && (
-          <div className="flex justify-center mt-4">
+          <div className="flex justify-center mt-4 pb-20">
             <button 
               onClick={handlerVerMas} 
               className="py-2 px-8 bg-white rounded-sm text-lg font-semibold shadow"
@@ -451,7 +516,7 @@ const Mobil = ({ data }) => {
 
 const Cardtes = ({content})=>{
   return(
-    <div className="w-full h-[300px] xl:h-[500px] flex flex-col justify-center items-center">
+    <div className="w-full h-[80%] flex flex-col justify-center items-center">
       <img src={content.img} className="w-full h-[80%] object-cover" alt={content.titulo}/>
       <span className="text-sm font-medium mt-2.5 w-full text-start">{content.titulo}</span>
     </div>
@@ -487,7 +552,7 @@ export default function Home() {
         <h3 className="text-[18px] xl:text-[28px] font-semibold mb-4 mt-6 text-center">Ten la libertad de usar lo que te {tamPantalla < 900 ? <br/> : ""} haga feliz</h3>
         <div className="w-full xl:w-[80%]">
           <div className="w-full">
-            <Carrusel data={set} flechas={true} cardMitad={true} cantCardMobil={3} cantCardDesktop={4} Card={Cardtes} estiloCarrusel={"w-full h-[300px] xl:h-[450px]"}/>
+            <Carrusel data={set} flechas={true} cardMitad={true} cantCardMobil={3} cantCardDesktop={4} Card={Cardtes} estiloCarrusel={"w-full h-[300px] xl:h-[450px]"} alto="top-[180px] xl:top-[300px]"/>
           </div>
         </div>  
       </div>
@@ -510,7 +575,7 @@ export default function Home() {
         <div className="w-full xl:w-[80%]">
           
           <div className="w-full">
-            <Carrusel data={set} flechas={true} cardMitad={true} cantCardMobil={3} cantCardDesktop={4} Card={Cardtes} estiloCarrusel={"w-full h-[300px] xl:h-[450px]"}/>
+            <Carrusel data={set} flechas={true} cardMitad={true} cantCardMobil={3} cantCardDesktop={4} Card={Cardtes} estiloCarrusel={"w-full h-[300px] xl:h-[450px]"} alto="top-[180px] xl:top-[300px]"/>
           </div>
 
         </div>  
