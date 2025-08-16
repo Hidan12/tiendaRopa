@@ -6,6 +6,6 @@
 }
 
 .swiper-pagination-bullet-active {
-  background: red !important;      /* color cuando está activa */
+  background: black !important;      /* color cuando está activa */
   opacity: 1 !important;
 }

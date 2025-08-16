@@ -17,9 +17,9 @@ const CardCategory = ({content, handler})=>{
     </div>
   )
 }
-const categorias = [{img: "./products/vestido-04.jpg", titulo:"VESTIDOS"}, {img: "./products/set-penelope-02-scaled.jpg", titulo:"SETS"},{img: "./products/conjunto-afrodita-01.jpg", titulo:"BLUSAS Y TOPS"}]
-const categoriasDos = [{img: "./products/vestido-hera-01.jpg", titulo:"VESTIDOS"}, {img: "./products/set-penelope-03-scaled.jpg", titulo:"SETS"},{img: "./products/corset-victoriano-blanco-01.jpg", titulo:"BLUSAS Y TOPS"}, {img: "./products/falda-arandela-bodylove-03.jpeg", titulo:"FALDAS Y SHORES"}]
-const set = [{img:"./products/conjunto-afrodita-02.jpg", titulo:"SET AFRODITA"}, {img:"./products/set-liz-01-scaled.jpg", titulo:"SET LIZ"}, {img:"./products/set-penelope-04-scaled.jpg", titulo:"SET PENELOPE"}]
+const categorias = [{img: "./products/vestido-04.jpg", titulo:"Vestidos"}, {img: "./products/set-penelope-02-scaled.jpg", titulo:"Sets"},{img: "./products/conjunto-afrodita-01.jpg", titulo:"Blusas y Tops"}]
+const categoriasDos = [{img: "./products/vestido-hera-01.jpg", titulo:"Vestidos"}, {img: "./products/set-penelope-03-scaled.jpg", titulo:"Sets"},{img: "./products/corset-victoriano-blanco-01.jpg", titulo:"Blusas y Tops"}, {img: "./products/falda-arandela-bodylove-03.jpeg", titulo:"Faldas Y Shores"}]
+const set = [{img:"./products/conjunto-afrodita-02.jpg", titulo:"Set Afrodita"}, {img:"./products/set-liz-01-scaled.jpg", titulo:"Set Liz"}, {img:"./products/set-penelope-04-scaled.jpg", titulo:"Set Penelope"},{img:"./products/conjunto-afrodita-02.jpg", titulo:"Set Afrodita"}, {img:"./products/set-liz-01-scaled.jpg", titulo:"Set Liz"}, {img:"./products/set-penelope-04-scaled.jpg", titulo:"Set Penelope"}]
 
 const productos = [
   {img: "./products/vestido-hera-01.jpg", categoria:"Vestidos", titulo: "Vestido Hera", precio: 90000}, 
@@ -250,9 +250,9 @@ const Desktop = ({ data }) => {
 }
 
 const Mobil = ({ data }) => {
-  const [precio, setPrecio] = useState(true);
-  const [categoria, setCategoria] = useState(true);
-  const [calificacion, setCalificacion] = useState(true);
+  const [precio, setPrecio] = useState(false);
+  const [categoria, setCategoria] = useState(false);
+  const [calificacion, setCalificacion] = useState(false);
   const [precioMin, setPrecioMin] = useState(0);
   const [precioMax, setPrecioMax] = useState(1300000000);
   const [categoriasSeleccionadas, setCategoriasSeleccionadas] = useState([]);
@@ -449,7 +449,14 @@ const Mobil = ({ data }) => {
   )
 }
 
-
+const Cardtes = ({content})=>{
+  return(
+    <div className="w-full h-[300px] xl:h-[500px] flex flex-col justify-center items-center">
+      <img src={content.img} className="w-full h-[80%] object-cover" alt={content.titulo}/>
+      <span className="text-sm font-medium mt-2.5 w-full text-start">{content.titulo}</span>
+    </div>
+  )
+}
 
 export default function Home() {
   const [tamPantalla, setTamPantalla] = useState()
@@ -472,19 +479,16 @@ export default function Home() {
 
 
   return (
-    <div className="w-full flex flex-col justify-center items-center bg-[#F5F5F5] pb-8 xl:pb-14">
-      <div className="w-full mt-5 xl:mt-8 xl:w-[80%]">
-        <Carrusel handler={handlerCategoria} cantCardDesktop={3} cantCardMobil={1} data={categorias} Card={CardCategory} estiloCarrusel={"w-full h-[350px] xl:h-[300px]"}/>
+    <div className="w-full flex flex-col justify-center items-center bg-[#F5F5F5] pb-0 xl:pb-11">
+      <div className="w-full mt-0 xl:mt-8 xl:w-[80%]">
+        <Carrusel handler={handlerCategoria} cantCardDesktop={3} cantCardMobil={1} data={categorias} Card={CardCategory} estiloCarrusel={"w-full h-[500px] xl:h-[400px]"}/>
       </div>
       <div className="w-full flex flex-col justify-center items-center mt-5 xl:mt-10">
-        <h3 className="text-[15px] xl:text-[28px] font-semibold">Ten la libertad de usar lo que te haga feliz</h3>
-        <div className="w-full xl:w-[80%] grid grid-cols-3 justify-items-center gap gap-x-2 xl:gap-4">
-          {set.map((s, k)=>(
-            <div key={k} className="w-full h-[300px] xl:h-[500px] flex flex-col justify-center items-center">
-              <img src={s.img} className="w-full h-[80%] object-cover" alt={s.titulo}/>
-              <span className="text-sm font-medium mt-2.5">{s.titulo}</span>
-            </div>
-          ))}
+        <h3 className="text-[18px] xl:text-[28px] font-semibold mb-4 mt-6 text-center">Ten la libertad de usar lo que te {tamPantalla < 900 ? <br/> : ""} haga feliz</h3>
+        <div className="w-full xl:w-[80%]">
+          <div className="w-full">
+            <Carrusel data={set} flechas={true} cardMitad={true} cantCardMobil={3} cantCardDesktop={4} Card={Cardtes} estiloCarrusel={"w-full h-[300px] xl:h-[450px]"}/>
+          </div>
         </div>  
       </div>
 
@@ -492,9 +496,9 @@ export default function Home() {
         <h3 className="text-[15px] xl:text-[28px] font-semibold">CATEGORÍAS</h3>
         <div className="w-[90%] xl:W-[85%] grid grid-cols-2 xl:grid-cols-4 justify-items-center gap gap-x-2 xl:gap-4">
           {categoriasDos.map((s, k)=>(
-            <div key={k} className="w-full h-[300px] xl:h-[500px] flex flex-col justify-center items-center">
+            <div key={k} className="w-full h-[300px] xl:h-[500px] flex flex-col  ">
               <img src={s.img} className="w-full h-[80%] object-cover" alt={s.titulo}/>
-              <span className="text-sm font-medium mt-2.5">{s.titulo}</span>
+              <span className="text-sm mt-2.5">{s.titulo}</span>
             </div>
           ))}
         </div>
@@ -504,12 +508,11 @@ export default function Home() {
       <div className="w-full flex flex-col justify-center items-center mt-5 xl:mt-10">
         <h3 className="text-[15px] xl:text-[28px] font-semibold">FAVORITOS</h3>
         <div className="w-full xl:w-[80%] grid grid-cols-3 justify-items-center gap gap-x-2 xl:gap-4">
-          {set.map((s, k)=>(
-            <div key={k} className="w-full h-[300px] xl:h-[500px] flex flex-col justify-center items-center">
-              <img src={s.img} className="w-full h-[80%] object-cover" alt={s.titulo}/>
-              <span className="text-sm font-medium mt-2.5">{s.titulo}</span>
-            </div>
-          ))}
+          
+          <div className="w-full">
+            <Carrusel data={set} flechas={true} cardMitad={true} cantCardMobil={3} cantCardDesktop={4} Card={Cardtes} estiloCarrusel={"w-full h-[300px] xl:h-[450px]"}/>
+          </div>
+
         </div>  
       </div>
 
